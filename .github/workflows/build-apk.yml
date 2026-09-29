@@ -1,0 +1,51 @@
+---
+name: Build Android APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Prepare web asset
+        run: |
+          mkdir -p android/app/src/main/assets/myos
+          cp index.html android/app/src/main/assets/myos/index.html
+          ls -la android/app/src/main/assets/myos/
+
+      - name: Download Gradle
+        run: |
+          curl -sL https://services.gradle.org/distributions/gradle-8.7-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+
+      - name: Build debug APK
+        run: /tmp/gradle-8.7/bin/gradle :app:assembleDebug --no-daemon
+        working-directory: android
+
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk myOS-${{ github.ref_name }}.apk
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: myOS-${{ github.ref_name }}.apk
+          name: myOS ${{ github.ref_name }}
+          body: |
+            myOS for Android - the whole web OS as a fullscreen landscape app.
+
+            Install: download the APK on your phone, open it, allow "install unknown apps" if asked.
