@@ -1,4 +1,5 @@
 ---
+
 name: Build Android APK
 
 on:
@@ -25,6 +26,7 @@ jobs:
         run: |
           mkdir -p android/app/src/main/assets/myos
           cp index.html android/app/src/main/assets/myos/index.html
+          cp -r media android/app/src/main/assets/myos/media
           ls -la android/app/src/main/assets/myos/
 
       - name: Download Gradle
