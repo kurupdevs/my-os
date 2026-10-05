@@ -468,7 +468,7 @@ body.dark .sysbtns button:hover{background:rgba(255,255,255,.08)}
   </div>
   <div id="windows"></div>
 </div>
-<div id="meme"><img id="memeImg" alt="meme"></div><div id="pwroff"><video id="pwrVid" playsinline disablepictureinpicture preload="auto"></video></div><div id="shut"><svg width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.2 6.5a8 8 0 1 0 11.6 0"/></svg><div style="margin-top:16px;font-size:15px">The system has shut down</div><button class="bigbtn" style="margin-top:14px" onclick="location.reload()">Power on</button></div>
+<div id="meme"><img id="memeImg" alt="meme"></div><div id="pwroff"><video id="pwrVid" playsinline disablepictureinpicture preload="none"></video></div><div id="shut"><svg width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.2 6.5a8 8 0 1 0 11.6 0"/></svg><div style="margin-top:16px;font-size:15px">The system has shut down</div><button class="bigbtn" style="margin-top:14px" onclick="location.reload()">Power on</button></div>
 <script>
 "use strict";
 
@@ -540,8 +540,8 @@ function openWin(id,title,html,w,h,x,y){
   document.addEventListener('mouseup',()=>drag=null);
   el.addEventListener('mousedown',()=>focusWin(W),true);
   el.querySelectorAll('.tb').forEach(b=>b.onclick=e=>{e.stopPropagation();const a=b.dataset.a;
-    if(a==='close'){el.classList.add('closing');setTimeout(()=>{el.remove();delete openWins[id];refreshDock()},170)}
-    if(a==='min'){el.classList.add('min');refreshDock()}
+    if(a==='close'){stopWinMedia(el);el.classList.add('closing');setTimeout(()=>{el.remove();delete openWins[id];refreshDock()},170)}
+    if(a==='min'){stopWinMedia(el);el.classList.add('min');refreshDock()}
     if(a==='max'){if(el.dataset.mx){el.style.left=el.dataset.x;el.style.top=el.dataset.y;el.style.width=el.dataset.w;el.style.height=el.dataset.h;delete el.dataset.mx}
       else{el.dataset.x=el.style.left;el.dataset.y=el.style.top;el.dataset.w=el.style.width;el.style.height=el.style.height;
         el.style.left='70px';el.style.top='40px';el.style.width=(innerWidth-140)+'px';el.style.height=(innerHeight-80)+'px';el.dataset.mx=1}}});
@@ -583,7 +583,7 @@ function refreshDock(){
     b.innerHTML=iconHTML(a[0]);
     if(openWins[a[0]])b.classList.add('run');
     b.onclick=()=>{const W1=openWins[a[0]];
-      if(W1&&!W1.el.classList.contains('min')){W1.el.classList.add('min');refreshDock();}
+      if(W1&&!W1.el.classList.contains('min')){stopWinMedia(W1.el);W1.el.classList.add('min');refreshDock();}
       else a[2]()};
     b.oncontextmenu=e=>{e.preventDefault();e.stopPropagation();dockMenu(e.clientX,e.clientY,a);};
     d.appendChild(b);});
@@ -653,7 +653,8 @@ function togglePin(id){const i=dockApps.findIndex(a=>a[0]===id);
  refreshDock();}
 function toggleFav(id){const a=MENU_APPS.find(v=>v.id===id);if(!a)return;a.fav=!a.fav;
  if($('#startmenu').dataset.built)renderStartMenu();}
-function closeWinById(id){const W=openWins[id];if(!W)return;W.el.classList.add('closing');
+function stopWinMedia(el){try{el.querySelectorAll('video,audio').forEach(function(m){try{m.pause()}catch(e){}})}catch(e){}}
+function closeWinById(id){const W=openWins[id];if(!W)return;stopWinMedia(W.el);W.el.classList.add('closing');
  setTimeout(()=>{W.el.remove();delete openWins[id];refreshDock();},170);}
 const APPDESC={files:'Browse, organize and manage your files and folders.',chrome:'Fast and secure web browser.',firefox:'Open-source web browser from Mozilla.',edge:'Modern web browser.',terminal:'kurupdevs command-line portfolio and tools.',telegram:'Fast and secure messaging.',discord:'Chat, voice and communities.',steam:'PC gaming platform and store.',youtube:'Watch and share videos.',github:'Code hosting and collaboration.',smartclean:'System cleaner and optimizer.',trash:'Deleted files are kept here.',calc:'Simple calculator.',editor:'Plain-text editor.',wallpapers:'Browse and set desktop wallpapers.',notes:'Quick sticky notes.',radio:'Live internet radio stations.',imageviewer:'View your images.',settings:'System settings and preferences.',kurubeats:'Music player with live visualizer.'};
 function openAppInfo(id){closeAppInfo();
@@ -971,7 +972,7 @@ $('#sysLock').onclick=()=>location.reload();
 
 
 
-function pwrVidURL(){return 'media/shutdown.mp4';}function playShutdown(then){closeSys();try{if(typeof toggleStartMenu==='function')toggleStartMenu(false);}catch(e){}var ov=$('#pwroff'),v=$('#pwrVid');ov.classList.add('on');try{var _mau=memeAudio();if(_mau){_mau.muted=true;_mau.loop=true;var _mpr=_mau.play();if(_mpr&&_mpr.catch)_mpr.catch(function(){});}}catch(e){}try{v.volume=((typeof VOL!=='undefined'?VOL:80)/100);}catch(e){}var finished=false;var done=function(){if(finished)return;finished=true;try{v.pause();}catch(e){}v.removeAttribute('src');v.onended=null;v.onerror=null;v.oncanplay=null;ov.classList.remove('on');ov.onclick=null;if(then)then();};ov.onclick=function(){done();};function go(){if(finished)return;try{var pr=v.play();if(pr&&pr.catch)pr.catch(function(){if(finished)return;v.muted=true;try{var pr2=v.play();if(pr2&&pr2.catch)pr2.catch(function(){});}catch(e){}});}catch(e){}}v.onended=done;v.onerror=function(){done();};v.oncanplay=function(){v.oncanplay=null;go();};try{v.src=pwrVidURL();v.load();}catch(e){}go();setTimeout(function(){if(!finished&&v.paused)go();},2500);setTimeout(done,12000);}setTimeout(function(){try{pwrVidURL();}catch(e){}},2500);function memeAudio(){if(!window._memeAu){try{window._memeAu=new Audio('media/meme.m4a');}catch(e){}}return window._memeAu;}function playMemeSeq(done){var ov=document.querySelector('#meme'),img=document.querySelector('#memeImg');if(!img.src)img.src='media/meme.gif';var au=memeAudio();ov.classList.add('on');var n=0,finished=false;var fin=function(){if(finished)return;finished=true;try{au.pause();au.muted=true;au.loop=true;}catch(e){}ov.classList.remove('on');ov.onclick=null;if(done)done();};ov.onclick=function(){fin();};function iter(){if(finished)return;if(n>=4){fin();return;}n++;img.className='m'+n;img.style.visibility='visible';try{if(au){au.loop=true;au.muted=false;au.currentTime=0;if(au.paused){var pr=au.play();if(pr&&pr.catch)pr.catch(function(){});}}}catch(e){}setTimeout(function(){if(finished)return;img.style.visibility='hidden';setTimeout(iter,350);},8500);}iter();}function powerOff(){playShutdown(function(){playMemeSeq(function(){$('#shut').classList.add('on')});});}function restartOS(){playShutdown(function(){location.reload()});}$('#sysOff').onclick=()=>powerOff();$('#sysRe').onclick=()=>restartOS();
+function pwrVidURL(){return 'media/shutdown.mp4';}function playShutdown(then){closeSys();try{if(typeof toggleStartMenu==='function')toggleStartMenu(false);}catch(e){}var ov=$('#pwroff'),v=$('#pwrVid');ov.classList.add('on');try{var _mau=memeAudio();if(_mau){_mau.muted=true;_mau.loop=true;var _mpr=_mau.play();if(_mpr&&_mpr.catch)_mpr.catch(function(){});}}catch(e){}try{v.volume=((typeof VOL!=='undefined'?VOL:80)/100);}catch(e){}var finished=false;var done=function(){if(finished)return;finished=true;try{v.pause();}catch(e){}v.removeAttribute('src');v.onended=null;v.onerror=null;v.oncanplay=null;ov.classList.remove('on');ov.onclick=null;if(then)then();};ov.onclick=function(){done();};function go(){if(finished)return;try{var pr=v.play();if(pr&&pr.catch)pr.catch(function(){if(finished)return;v.muted=true;try{var pr2=v.play();if(pr2&&pr2.catch)pr2.catch(function(){});}catch(e){}});}catch(e){}}v.onended=done;v.onerror=function(){done();};v.oncanplay=function(){v.oncanplay=null;go();};try{v.src=pwrVidURL();v.load();}catch(e){}go();setTimeout(function(){if(!finished&&v.paused)go();},2500);setTimeout(done,12000);}setTimeout(function(){try{pwrVidURL();}catch(e){}},2500);window.addEventListener('load',function(){setTimeout(function(){try{var v=document.getElementById('pwrVid');if(v&&!v.getAttribute('src')){v.src=pwrVidURL();v.load();}}catch(e){}},4000);});function memeAudio(){if(!window._memeAu){try{window._memeAu=new Audio('media/meme.m4a');}catch(e){}}return window._memeAu;}function playMemeSeq(done){var ov=document.querySelector('#meme'),img=document.querySelector('#memeImg');if(!img.src)img.src='media/meme.gif';var au=memeAudio();ov.classList.add('on');var n=0,finished=false;var fin=function(){if(finished)return;finished=true;try{au.pause();au.muted=true;au.loop=true;}catch(e){}ov.classList.remove('on');ov.onclick=null;if(done)done();};ov.onclick=function(){fin();};function iter(){if(finished)return;if(n>=4){fin();return;}n++;img.className='m'+n;img.style.visibility='visible';try{if(au){au.loop=true;au.muted=false;au.currentTime=0;if(au.paused){var pr=au.play();if(pr&&pr.catch)pr.catch(function(){});}}}catch(e){}setTimeout(function(){if(finished)return;img.style.visibility='hidden';setTimeout(iter,350);},8500);}iter();}function powerOff(){playShutdown(function(){playMemeSeq(function(){$('#shut').classList.add('on')});});}function restartOS(){playShutdown(function(){location.reload()});}$('#sysOff').onclick=()=>powerOff();$('#sysRe').onclick=()=>restartOS();
 refreshDock();renderDeskIcons();renderWidgets();
 /* ============ TERMINAL (portfolio CLI) ============ */
 const NEOFETCH=[
@@ -1200,7 +1201,7 @@ function openWebApp(id,title,url){
     if(blocked){fr.style.display='none';fall.style.display='flex';}},1500);};return W}
 function openTelegram(){openWebApp('telegram','Telegram','https://web.telegram.org/k/')}
 function openDiscord(){playIntro(openWebApp('discord','Discord','https://discord.com/login'),'media/discord-intro.mp4')}
-function playIntro(W,src){if(!W||!W.el)return;const _ov=document.createElement('div');_ov.style.cssText='position:absolute;inset:0;z-index:60;background:#000;display:flex;align-items:center;justify-content:center';_ov.innerHTML='<video src="'+src+'" playsinline preload="auto" style="width:100%;height:100%;object-fit:contain;background:#000"></video><button class="bigbtn" style="position:absolute;bottom:16px;right:16px;margin:0">Skip \u23ED</button>';W.el.querySelector('.wbody').appendChild(_ov);const _vd=_ov.querySelector('video'),_dn=()=>{try{_ov.remove()}catch(e){}};_vd.onended=_dn;_ov.querySelector('button').onclick=e=>{e.stopPropagation();_dn()};try{const _pr=_vd.play();if(_pr&&_pr.catch)_pr.catch(()=>{_vd.muted=true;_vd.play().catch(()=>{})})}catch(e){}}
+function playIntro(W,src){if(!W||!W.el)return;if(W.el.querySelector('.intro-ov'))return;const _ov=document.createElement('div');_ov.className='intro-ov';_ov.style.cssText='position:absolute;inset:0;z-index:60;background:#000;display:flex;align-items:center;justify-content:center';_ov.innerHTML='<video src="'+src+'" playsinline preload="auto" style="width:100%;height:100%;object-fit:contain;background:#000"></video><button class="bigbtn" style="position:absolute;bottom:16px;right:16px;margin:0">Skip \u23ED</button>';W.el.querySelector('.wbody').appendChild(_ov);const _vd=_ov.querySelector('video'),_dn=()=>{try{_ov.remove()}catch(e){}};_vd.onended=_dn;_ov.querySelector('button').onclick=e=>{e.stopPropagation();_dn()};try{const _pr=_vd.play();if(_pr&&_pr.catch)_pr.catch(()=>{_vd.muted=true;_vd.play().catch(()=>{})})}catch(e){}}
 function openSteam(){playIntro(openWebApp('steam','Steam','https://store.steampowered.com/'),'media/steam-intro.mp4')}
 function openOfficeApp(id,name,url,color){
   const W=openWin(id,name,'<div class=\"officelaunch\"><div class=\"ol-icon\" style=\"background:'+color+'\">'+name[0]+'</div><div class=\"ol-name\">'+name+'</div><div class=\"ol-sub\">The real Microsoft '+name+' web app.<br>Sign in with your Microsoft account to use it.</div><button class=\"bigbtn\" id=\"olGo\">Launch '+name+' &#8599;</button><div class=\"ol-note\">Opens office.com in a new tab - Microsoft blocks embedding.</div></div>',360,430);
@@ -1567,7 +1568,7 @@ function openFiles(path){
   W.el.querySelector('#fSearch').oninput=()=>render();
   body.addEventListener('click',()=>{});
   render();
-}
+  playIntro(W,'media/files-intro.mp4');return W}
 function openViewer(name,src){openWin('viewer-'+name,'Visor — '+name,'<div class="viewer"><img src="'+src+'"></div>',720,520)}
 /* ============ TRASH (desktop) ============ */
 function openTrash(){openFiles('__trash')}
