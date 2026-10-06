@@ -354,6 +354,56 @@ body.dark .sysbtns button:hover{background:rgba(255,255,255,.08)}
 .grow .tg:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
 .grow .tg.on:after{left:23px}
 .grow input[type=range]{margin-left:auto;accent-color:var(--accent);width:190px}
+.grow select{margin-left:auto;background:#4a4a4a;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:13px;outline:none;cursor:pointer}
+.grow .val{margin-left:auto;color:#999;font-size:13px}
+/* brightness + night light overlays */
+#brightOv{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:9990;transition:opacity .2s}
+#nightOv{position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(255,140,0,.12),rgba(255,100,0,.22));opacity:0;pointer-events:none;z-index:9991;transition:opacity .4s}
+/* calendar app */
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;color:#fff;font-size:16px;font-weight:600}
+.cal-head button{background:rgba(255,255,255,.08);border:none;color:#fff;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 14px 16px}
+.cal-dow{color:#999;font-size:11px;text-align:center;padding:6px 0;text-transform:uppercase}
+.cal-day{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#eee;font-size:14px;cursor:pointer;transition:background .12s}
+.cal-day:hover{background:rgba(255,255,255,.08)}
+.cal-day.dim{color:#555}
+.cal-day.today{background:var(--accent);color:#fff;font-weight:700}
+/* system monitor */
+.sm-tabs{display:flex;gap:6px;padding:12px 16px 0}
+.sm-tabs button{background:none;border:none;color:#aaa;font-size:13px;padding:8px 14px;border-radius:8px;cursor:pointer}
+.sm-tabs button.on{background:rgba(255,255,255,.1);color:#fff}
+.sm-graph{margin:14px 16px;background:#1c1c1e;border-radius:12px;padding:12px}
+.sm-graph canvas{width:100%;height:110px;display:block}
+.sm-graph .lbl{color:#ddd;font-size:13px;margin-bottom:8px;display:flex;justify-content:space-between}
+.sm-proc{margin:0 16px 16px;background:#1c1c1e;border-radius:12px;overflow:hidden}
+.sm-prow{display:grid;grid-template-columns:1fr 70px 70px;gap:8px;padding:9px 14px;color:#ddd;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.05);font-family:monospace}
+.sm-prow.hd{color:#888;font-family:inherit}
+/* software center */
+.sw-cats{display:flex;gap:8px;padding:12px 16px;flex-wrap:wrap}
+.sw-cats button{background:rgba(255,255,255,.07);border:none;color:#ddd;border-radius:16px;padding:7px 16px;font-size:13px;cursor:pointer}
+.sw-cats button.on{background:var(--accent);color:#fff}
+.sw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:4px 16px 18px}
+.sw-card{background:#2c2c2e;border-radius:14px;padding:16px 12px;text-align:center;color:#eee;cursor:pointer;transition:transform .12s}
+.sw-card:hover{transform:translateY(-2px)}
+.sw-card .ic{width:52px;height:52px;margin:0 auto 10px;display:block}
+.sw-card .ic svg{width:100%;height:100%}
+.sw-card b{font-size:13px;display:block}
+.sw-card span{font-size:11px;color:#999;display:block;margin:4px 0 10px;min-height:28px}
+.sw-card button{background:var(--accent);border:none;color:#fff;border-radius:8px;padding:7px 18px;font-size:12.5px;cursor:pointer;font-weight:600}
+.sw-card button.inst{background:rgba(255,255,255,.12)}
+/* characters */
+.char-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;padding:14px 16px;max-height:380px;overflow:auto}
+.char-grid button{background:#2c2c2e;border:none;border-radius:10px;font-size:24px;padding:10px 0;cursor:pointer;transition:transform .1s}
+.char-grid button:hover{transform:scale(1.15);background:#3a3a3e}
+/* disks */
+.disk-card{background:#2c2c2e;border-radius:14px;padding:16px 18px;margin:12px 16px;color:#eee}
+.disk-card .bar{height:10px;background:rgba(255,255,255,.1);border-radius:5px;margin:10px 0 6px;overflow:hidden}
+.disk-card .bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent),#7dd87d)}
+/* clocks */
+.wc-row{display:flex;align-items:center;gap:14px;padding:14px 20px;color:#eee;border-bottom:1px solid rgba(255,255,255,.06)}
+.wc-row .t{margin-left:auto;text-align:right}
+.wc-row .t b{font-size:20px;font-variant-numeric:tabular-nums}
+.wc-row .t span{display:block;font-size:11px;color:#999}
 .wpicks{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .wpick{border-radius:12px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .15s,transform .15s;position:relative;height:120px;background-size:cover;background-position:center}
 .wpick:hover{transform:scale(1.03)}
@@ -447,6 +497,7 @@ body.dark .sysbtns button:hover{background:rgba(255,255,255,.08)}
   <div id="dock"></div><div id="deskicons"></div><div id="widgets"></div>
   <div id="startmenu"><div class="sm-side" id="smSide"></div><div class="sm-main"><div class="sm-grid" id="smGrid"></div><div class="sm-search"><input id="smSearch" placeholder="Search applications..." spellcheck="false"></div></div></div>
   <div id="lockscr"><div class="lk-clock" id="lkClock">--:--</div><div class="lk-user">oqded</div><button class="bigbtn" id="lkUnlock">Unlock</button><div class="lk-hint">Click unlock or press any key</div></div>
+  <div id="brightOv"></div><div id="nightOv"></div>
   <div id="overview"><input id="ovSearch" placeholder="Type to search" spellcheck="false"><div id="ovGrid"></div></div>
   <div class="popup" id="sysmenu">
     <div class="srow2"><span>🔊</span><input type="range" id="sysVol" min="0" max="100" value="80"></div>
@@ -490,7 +541,15 @@ typing:'<svg viewBox=\"0 0 48 48\"><rect x=\"4\" y=\"11\" width=\"40\" height=\"
 paint:'<svg viewBox=\"0 0 48 48\"><circle cx=\"22\" cy=\"24\" r=\"17\" fill=\"#f5f0e6\"/><circle cx=\"15\" cy=\"18\" r=\"3.6\" fill=\"#e05a4f\"/><circle cx=\"24\" cy=\"13\" r=\"3.6\" fill=\"#ffcf5c\"/><circle cx=\"33\" cy=\"17\" r=\"3.6\" fill=\"#5b9dff\"/><circle cx=\"33\" cy=\"27\" r=\"3.6\" fill=\"#7dd87d\"/><path d=\"M28 30l9 9\" stroke=\"#8a6d4b\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></svg>',
 music:'<svg viewBox="0 0 48 48"><ellipse cx="15" cy="37" rx="7" ry="5.5" fill="#b388ff" transform="rotate(-20 15 37)"/><rect x="20" y="9" width="4.5" height="26" fill="#b388ff"/><path d="M24.5 9c6.5 1 11 4.5 13 10-3.5-3.5-8-5-13-5V9z" fill="#b388ff"/></svg>',
 smartclean:'<svg viewBox="0 0 48 48"><polygon points="27,3 11,28 21.5,28 19,45 37,19 25.5,19" fill="#ffd23d" stroke="#e8a13d" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-timeshift:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#2b2d41" stroke="#8f96b8" stroke-width="3"/><line x1="24" y1="24" x2="24" y2="13" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="32" y2="28" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>',chrome:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="#ffffff"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#ea4335" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(-90 24 24)"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#fbbc05" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(30 24 24)"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#34a853" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(150 24 24)"/><circle cx="24" cy="24" r="8.5" fill="#1a73e8" stroke="#ffffff" stroke-width="3"/></svg>',notes:'<svg viewBox="0 0 48 48"><path d="M10 4h24l8 8v30a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#ffd75e"/><path d="M34 4l8 8h-8z" fill="#e0aa3e"/><path d="M15 20h18M15 27h18M15 34h12" stroke="#a8842a" stroke-width="2.6" stroke-linecap="round"/></svg>',radio:'<svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="22" rx="5" fill="#3a3d55"/><circle cx="16" cy="29" r="6.5" fill="#1e2033" stroke="#8a8fa8" stroke-width="2"/><circle cx="16" cy="29" r="2" fill="#8a8fa8"/><rect x="26" y="25" width="12" height="8" rx="2" fill="#5b9dff"/><path d="M33 18L41 6" stroke="#8a8fa8" stroke-width="3" stroke-linecap="round"/><circle cx="41" cy="6" r="2.6" fill="#ff5b5b"/></svg>',imageviewer:'<svg viewBox="0 0 48 48"><rect x="4" y="9" width="40" height="30" rx="4" fill="#2b2e45"/><circle cx="15" cy="18" r="3.6" fill="#ffd75e"/><path d="M6 34l11-11 7 7 5-5 13 13v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-5z" fill="#5b9dff"/></svg>'};
+timeshift:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#2b2d41" stroke="#8f96b8" stroke-width="3"/><line x1="24" y1="24" x2="24" y2="13" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="32" y2="28" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>',chrome:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="#ffffff"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#ea4335" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(-90 24 24)"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#fbbc05" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(30 24 24)"/><circle cx="24" cy="24" r="16.5" fill="none" stroke="#34a853" stroke-width="9" stroke-dasharray="34.6 69.1" transform="rotate(150 24 24)"/><circle cx="24" cy="24" r="8.5" fill="#1a73e8" stroke="#ffffff" stroke-width="3"/></svg>',notes:'<svg viewBox="0 0 48 48"><path d="M10 4h24l8 8v30a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#ffd75e"/><path d="M34 4l8 8h-8z" fill="#e0aa3e"/><path d="M15 20h18M15 27h18M15 34h12" stroke="#a8842a" stroke-width="2.6" stroke-linecap="round"/></svg>',radio:'<svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="22" rx="5" fill="#3a3d55"/><circle cx="16" cy="29" r="6.5" fill="#1e2033" stroke="#8a8fa8" stroke-width="2"/><circle cx="16" cy="29" r="2" fill="#8a8fa8"/><rect x="26" y="25" width="12" height="8" rx="2" fill="#5b9dff"/><path d="M33 18L41 6" stroke="#8a8fa8" stroke-width="3" stroke-linecap="round"/><circle cx="41" cy="6" r="2.6" fill="#ff5b5b"/></svg>',imageviewer:'<svg viewBox="0 0 48 48"><rect x="4" y="9" width="40" height="30" rx="4" fill="#2b2e45"/><circle cx="15" cy="18" r="3.6" fill="#ffd75e"/><path d="M6 34l11-11 7 7 5-5 13 13v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-5z" fill="#5b9dff"/></svg>',
+sysmon:'<svg viewBox="0 0 48 48"><rect x="4" y="6" width="40" height="36" rx="5" fill="#2b2e45"/><path d="M10 32l8-10 6 6 8-12 6 8" stroke="#7dd87d" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 38h28" stroke="#4a4e6e" stroke-width="3" stroke-linecap="round"/></svg>',
+calendar:'<svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="33" rx="5" fill="#f5f5f7"/><rect x="6" y="9" width="36" height="11" rx="5" fill="#e05a4f"/><rect x="6" y="15" width="36" height="5" fill="#e05a4f"/><rect x="14" y="4" width="4" height="9" rx="2" fill="#8a8fa8"/><rect x="30" y="4" width="4" height="9" rx="2" fill="#8a8fa8"/><g fill="#c9cede"><rect x="12" y="25" width="5" height="5" rx="1"/><rect x="20" y="25" width="5" height="5" rx="1"/><rect x="28" y="25" width="5" height="5" rx="1"/><rect x="12" y="32" width="5" height="5" rx="1"/><rect x="20" y="32" width="5" height="5" rx="1" fill="#e05a4f"/></g></svg>',
+software:'<svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="6" fill="#4a86ff"/><path d="M24 16v10M19 21h10" stroke="#fff" stroke-width="4" stroke-linecap="round"/><rect x="14" y="38" width="20" height="4" rx="2" fill="#8a8fa8"/></svg>',
+clocks:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="#2b2e45" stroke="#5b9dff" stroke-width="3"/><path d="M24 14v10l8 5" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+chars:'<svg viewBox="0 0 48 48"><rect x="5" y="5" width="38" height="38" rx="8" fill="#3a3d55"/><text x="15" y="30" font-size="20" fill="#ffd75e">Ω</text><text x="29" y="30" font-size="20" fill="#7dd87d">★</text><text x="15" y="42" font-size="16" fill="#9cc2ff">☺</text><text x="31" y="41" font-size="16" fill="#f2a0a8">♥</text></svg>',
+disks:'<svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="4" fill="#8a8fa8"/><circle cx="24" cy="24" r="8" fill="#e8eaf2"/><circle cx="24" cy="24" r="2.5" fill="#8a8fa8"/><path d="M24 8v8" stroke="#e8eaf2" stroke-width="4"/></svg>',
+vlc:'<svg viewBox="0 0 48 48"><path d="M24 5l11 32a3 3 0 0 1-2.8 4H15.8a3 3 0 0 1-2.8-4L24 5z" fill="#ff8800"/><path d="M24 5l4 32h-8l4-32z" fill="#ffab4a"/><path d="M18 37h12l1.5 4h-15l1.5-4z" fill="#e8eaf2"/></svg>',
+gimp:'<svg viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#5b5b7a"/><text x="24" y="34" font-family="Arial,sans-serif" font-size="26" font-weight="bold" fill="#ffffff" text-anchor="middle">G</text></svg>'};
 const BRAND_SVG={telegram:['#ffffff','M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z','#26A5E4'],discord:['#ffffff','M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z','#5865F2'],steam:['#1b2838','M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z','#ffffff'],youtube:['#ffffff','M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z','#FF0000'],github:['#ffffff','M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12','#181717'],spotify:['#ffffff','M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z','#1DB954'],firefox:['#ffffff','M8.824 7.287c.008 0 .004 0 0 0zm-2.8-1.4c.006 0 .003 0 0 0zm16.754 2.161c-.505-1.215-1.53-2.528-2.333-2.943.654 1.283 1.033 2.57 1.177 3.53l.002.02c-1.314-3.278-3.544-4.6-5.366-7.477-.091-.147-.184-.292-.273-.446a3.545 3.545 0 01-.13-.24 2.118 2.118 0 01-.172-.46.03.03 0 00-.027-.03.038.038 0 00-.021 0l-.006.001a.037.037 0 00-.01.005L15.624 0c-2.585 1.515-3.657 4.168-3.932 5.856a6.197 6.197 0 00-2.305.587.297.297 0 00-.147.37c.057.162.24.24.396.17a5.622 5.622 0 012.008-.523l.067-.005a5.847 5.847 0 011.957.222l.095.03a5.816 5.816 0 01.616.228c.08.036.16.073.238.112l.107.055a5.835 5.835 0 01.368.211 5.953 5.953 0 012.034 2.104c-.62-.437-1.733-.868-2.803-.681 4.183 2.09 3.06 9.292-2.737 9.02a5.164 5.164 0 01-1.513-.292 4.42 4.42 0 01-.538-.232c-1.42-.735-2.593-2.121-2.74-3.806 0 0 .537-2 3.845-2 .357 0 1.38-.998 1.398-1.287-.005-.095-2.029-.9-2.817-1.677-.422-.416-.622-.616-.8-.767a3.47 3.47 0 00-.301-.227 5.388 5.388 0 01-.032-2.842c-1.195.544-2.124 1.403-2.8 2.163h-.006c-.46-.584-.428-2.51-.402-2.913-.006-.025-.343.176-.389.206-.406.29-.787.616-1.136.974-.397.403-.76.839-1.085 1.303a9.816 9.816 0 00-1.562 3.52c-.003.013-.11.487-.19 1.073-.013.09-.026.181-.037.272a7.8 7.8 0 00-.069.667l-.002.034-.023.387-.001.06C.386 18.795 5.593 24 12.016 24c5.752 0 10.527-4.176 11.463-9.661.02-.149.035-.298.052-.448.232-1.994-.025-4.09-.753-5.844z','#FF7139'],edge:['#ffffff','M21.86 17.86q.14 0 .25.12.1.13.1.25t-.11.33l-.32.46-.43.53-.44.5q-.21.25-.38.42l-.22.23q-.58.53-1.34 1.04-.76.51-1.6.91-.86.4-1.74.64t-1.67.24q-.9 0-1.69-.28-.8-.28-1.48-.78-.68-.5-1.22-1.17-.53-.66-.92-1.44-.38-.77-.58-1.6-.2-.83-.2-1.67 0-1 .32-1.96.33-.97.87-1.8.14.95.55 1.77.41.82 1.02 1.5.6.68 1.38 1.21.78.54 1.64.9.86.36 1.77.56.92.2 1.8.2 1.12 0 2.18-.24 1.06-.23 2.06-.72l.2-.1.2-.05zm-15.5-1.27q0 1.1.27 2.15.27 1.06.78 2.03.51.96 1.24 1.77.74.82 1.66 1.4-1.47-.2-2.8-.74-1.33-.55-2.48-1.37-1.15-.83-2.08-1.9-.92-1.07-1.58-2.33T.36 14.94Q0 13.54 0 12.06q0-.81.32-1.49.31-.68.83-1.23.53-.55 1.2-.96.66-.4 1.35-.66.74-.27 1.5-.39.78-.12 1.55-.12.7 0 1.42.1.72.12 1.4.35.68.23 1.32.57.63.35 1.16.83-.35 0-.7.07-.33.07-.65.23v-.02q-.63.28-1.2.74-.57.46-1.05 1.04-.48.58-.87 1.26-.38.67-.65 1.39-.27.71-.42 1.44-.15.72-.15 1.38zM11.96.06q1.7 0 3.33.39 1.63.38 3.07 1.15 1.43.77 2.62 1.93 1.18 1.16 1.98 2.7.49.94.76 1.96.28 1 .28 2.08 0 .89-.23 1.7-.24.8-.69 1.48-.45.68-1.1 1.22-.64.53-1.45.88-.54.24-1.11.36-.58.13-1.16.13-.42 0-.97-.03-.54-.03-1.1-.12-.55-.1-1.05-.28-.5-.19-.84-.5-.12-.09-.23-.24-.1-.16-.1-.33 0-.15.16-.35.16-.2.35-.5.2-.28.36-.68.16-.4.16-.95 0-1.06-.4-1.96-.4-.91-1.06-1.64-.66-.74-1.52-1.28-.86-.55-1.79-.89-.84-.3-1.72-.44-.87-.14-1.76-.14-1.55 0-3.06.45T.94 7.55q.71-1.74 1.81-3.13 1.1-1.38 2.52-2.35Q6.68 1.1 8.37.58q1.7-.52 3.58-.52Z','#0078D7'],brave:['#ffffff','M15.68 0l2.096 2.38s1.84-.512 2.709.358c.868.87 1.584 1.638 1.584 1.638l-.562 1.381.715 2.047s-2.104 7.98-2.35 8.955c-.486 1.919-.818 2.66-2.198 3.633-1.38.972-3.884 2.66-4.293 2.916-.409.256-.92.692-1.38.692-.46 0-.97-.436-1.38-.692a185.796 185.796 0 01-4.293-2.916c-1.38-.973-1.712-1.714-2.197-3.633-.247-.975-2.351-8.955-2.351-8.955l.715-2.047-.562-1.381s.716-.768 1.585-1.638c.868-.87 2.708-.358 2.708-.358L8.321 0h7.36zm-3.679 14.936c-.14 0-1.038.317-1.758.69-.72.373-1.242.637-1.409.742-.167.104-.065.301.087.409.152.107 2.194 1.69 2.393 1.866.198.175.489.464.687.464.198 0 .49-.29.688-.464.198-.175 2.24-1.759 2.392-1.866.152-.108.254-.305.087-.41-.167-.104-.689-.368-1.41-.741-.72-.373-1.617-.69-1.757-.69zm0-11.278s-.409.001-1.022.206-1.278.46-1.584.46c-.307 0-2.581-.434-2.581-.434S4.119 7.152 4.119 7.849c0 .697.339.881.68 1.243l2.02 2.149c.192.203.59.511.356 1.066-.235.555-.58 1.26-.196 1.977.384.716 1.042 1.194 1.464 1.115.421-.08 1.412-.598 1.776-.834.364-.237 1.518-1.19 1.518-1.554 0-.365-1.193-1.02-1.413-1.168-.22-.15-1.226-.725-1.247-.95-.02-.227-.012-.293.284-.851.297-.559.831-1.304.742-1.8-.089-.495-.95-.753-1.565-.986-.615-.232-1.799-.671-1.947-.74-.148-.068-.11-.133.339-.175.448-.043 1.719-.212 2.292-.052.573.16 1.552.403 1.632.532.079.13.149.134.067.579-.081.445-.5 2.581-.541 2.96-.04.38-.12.63.288.724.409.094 1.097.256 1.333.256s.924-.162 1.333-.256c.408-.093.329-.344.288-.723-.04-.38-.46-2.516-.541-2.961-.082-.445-.012-.45.067-.579.08-.129 1.059-.372 1.632-.532.573-.16 1.845.009 2.292.052.449.042.487.107.339.175-.148.069-1.332.508-1.947.74-.615.233-1.476.49-1.565.986-.09.496.445 1.241.742 1.8.297.558.304.624.284.85-.02.226-1.026.802-1.247.95-.22.15-1.413.804-1.413 1.169 0 .364 1.154 1.317 1.518 1.554.364.236 1.355.755 1.776.834.422.079 1.08-.4 1.464-1.115.384-.716.039-1.422-.195-1.977-.235-.555.163-.863.355-1.066l2.02-2.149c.341-.362.68-.546.68-1.243 0-.697-2.695-3.96-2.695-3.96s-2.274.436-2.58.436c-.307 0-.972-.256-1.585-.461-.613-.205-1.022-.206-1.022-.206z','#FB542B']};
 function brandIcon(k){const b=BRAND_SVG[k];return '<svg viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="'+b[0]+'"/><g transform="translate(12,12)"><path d="'+b[1]+'" fill="'+b[2]+'"/></g></svg>';}
 function iconHTML(k){if(!k)return'▣';if(k.indexOf('browser-')===0)k=k.slice(8);if(SYS_ICONS[k])return SYS_ICONS[k];if(BRAND_SVG[k])return brandIcon(k);return '▣';}
@@ -500,6 +559,11 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function fmtT(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
 let VOL=80;
+/* global OS state (declared early: tickClock and others run at load) */
+let BRIGHT=100, NIGHT=false, BIGTEXT=false, H24=true, REDANIM=false, DND=false, AUTOTZ=true;
+let wifiOn=true, btOn=true, wifiNet='MiCasa-5G';
+let netWired=true,natScroll=false,tapClick=true,privLoc=true,privCam=true,privMic=true,scrLock=true;
+let tgCbs=[];
 /* ============ wallpapers ============ */
 const WPS={
   panther:{css:'url("media/wp-midori.jpg")',label:'Panther'},
@@ -571,7 +635,9 @@ const gridApps=[
   ['youtube','YouTube',()=>openYoutube()],['trash','Trash',()=>openTrash()],
   ['telegram','Telegram',()=>openTelegram()],['discord','Discord',()=>openDiscord()],
   ['steam','Steam',()=>openSteam()],   ['firefox','Firefox',()=>openBrowserApp('firefox')],   ['edge','Edge',()=>openBrowserApp('edge')],   ['notes','Notes',openNotes],   ['radio','Radio',openRadio],   ['imgview','Image Viewer',openImgView],
-  ['excel','Excel',()=>openExcel()],['word','Word',()=>openWord()],['powerpoint','PowerPoint',()=>openPowerPoint()],['typing','Typing Tutor',()=>openTyping()],['paint','Paint',()=>openPaint()]];
+  ['excel','Excel',()=>openExcel()],['word','Word',()=>openWord()],['powerpoint','PowerPoint',()=>openPowerPoint()],['typing','Typing Tutor',()=>openTyping()],['paint','Paint',()=>openPaint()],
+  ['sysmon','System Monitor',()=>openSysMon()],['disks','Disks',()=>openDisks()],['software','Software',()=>openSoftware()],
+  ['calendar','Calendar',()=>openCalendarApp()],['clocks','Clocks',()=>openClocks()],['chars','Characters',()=>openChars()]];
 function refreshTask(){try{refreshDock()}catch(e){}}
 const DOTS_SVG='<svg viewBox="0 0 48 48"><g fill="#ddd"><circle cx="14" cy="14" r="5"/><circle cx="24" cy="14" r="5"/><circle cx="34" cy="14" r="5"/><circle cx="14" cy="24" r="5"/><circle cx="24" cy="24" r="5"/><circle cx="34" cy="24" r="5"/><circle cx="14" cy="34" r="5"/><circle cx="24" cy="34" r="5"/><circle cx="34" cy="34" r="5"/></g></svg>';
 function refreshDock(){
@@ -882,7 +948,13 @@ const MENU_APPS=[
  {id:'imgview',name:'Image Viewer',cat:'Graphics',run:openImgView},
  {id:'excel',name:'Excel',cat:'Office',run:openExcel},{id:'word',name:'Word',cat:'Office',run:openWord},
  {id:'powerpoint',name:'PowerPoint',cat:'Office',run:openPowerPoint},{id:'typing',name:'Typing Tutor',cat:'Office',run:openTyping},
- {id:'paint',name:'Paint',cat:'Graphics',run:openPaint}];
+ {id:'paint',name:'Paint',cat:'Graphics',run:openPaint},
+ {id:'sysmon',name:'System Monitor',cat:'System',run:openSysMon},
+ {id:'disks',name:'Disks',cat:'System',run:openDisks},
+ {id:'software',name:'Software',cat:'System',fav:1,run:openSoftware},
+ {id:'calendar',name:'Calendar',cat:'Accessories',run:openCalendarApp},
+ {id:'clocks',name:'Clocks',cat:'Accessories',run:openClocks},
+ {id:'chars',name:'Characters',cat:'Accessories',run:openChars}];
 const MENU_CATS=['Accessories','Games','Graphics','Internet','Multimedia','Office','System'];
 let smCat='fav';
 function renderStartMenu(){
@@ -951,7 +1023,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleOverview(false
 /* ============ top bar ============ */
 function tickClock(){
   const n=new Date(),p=x=>String(x).padStart(2,'0');
-  $('#btnClock').textContent=n.toLocaleDateString('en-US',{month:'short',day:'numeric'})+'  '+p(n.getHours())+':'+p(n.getMinutes());
+  let h=n.getHours();if(!H24){h=h%12||12;}
+  $('#btnClock').textContent=n.toLocaleDateString('en-US',{month:'short',day:'numeric'})+'  '+p(h)+':'+p(n.getMinutes());
 }
 setInterval(tickClock,1000);tickClock();
 $('#btnClock').onclick=()=>openWin('cal','Calendar','<div class="dlg"><div class="dic">📅</div><b style="font-size:22px">'+new Date().toLocaleDateString('en-US',{weekday:'long',day:'numeric',month:'long'})+'</b><p style="color:#999;margin-top:8px">No upcoming events</p></div>',360,260);
@@ -1138,17 +1211,19 @@ function openTerminal(){
 }
 
 /* ============ SETTINGS (GNOME) ============ */
-let wifiOn=true, btOn=true, wifiNet='MiCasa-5G';
+function applyBright(){$('#brightOv').style.opacity=(100-BRIGHT)/100;}
+function applyNight(){$('#nightOv').style.opacity=NIGHT?1:0;}
+function applyBigText(){document.documentElement.style.fontSize=BIGTEXT?'18px':'15px';}
 function openSettings(page){
   const W=openWin('settings','Settings','<div class="gset"><div class="gside" id="gsSide"></div><div class="gmain" id="gsMain"></div></div>',760,540);
   const side=W.el.querySelector('#gsSide'),main=W.el.querySelector('#gsMain');
-  const pages=[['wifi','📶','Wi-Fi'],['bt','🛰','Bluetooth'],['bg','🖼','Background'],['look','🎨','Appearance'],['sound','🔊','Sound'],['power','🔋','Power'],['about','🖥','About']];
+  const pages=[['wifi','📶','Wi-Fi'],['network','🌐','Network'],['bt','🛰','Bluetooth'],['bg','🖼','Background'],['look','🎨','Appearance'],['notif','🔔','Notifications'],['sound','🔊','Sound'],['power','🔋','Power'],['display','🖥','Displays'],['mouse','🖱','Mouse & Touchpad'],['kbd','⌨','Keyboard'],['privacy','🔒','Privacy'],['users','👤','Users'],['datetime','🕐','Date & Time'],['defaultapps','📦','Default Apps'],['a11y','♿','Accessibility'],['about','ℹ','About']];
   let cur=page||'wifi';
   function nav(){side.innerHTML=pages.map(p=>'<div class="srow'+(cur===p[0]?' on':'')+'" data-p="'+p[0]+'">'+p[1]+' '+p[2]+'</div>').join('');
     side.querySelectorAll('.srow').forEach(r=>r.onclick=()=>{cur=r.dataset.p;nav();render()});}
-  function tgRow(label,sub,on,cb){return '<div class="grow"><div>'+label+'<span class="sub">'+sub+'</span></div><span class="tg'+(on?' on':'')+'" data-tg></span></div>'}
-  function bindTg(cb){main.querySelectorAll('[data-tg]').forEach(t=>t.onclick=e=>{e.stopPropagation();cb(t)})}
-  function render(){
+  function tgRow(label,sub,on,cb){const i=tgCbs.length;tgCbs.push(cb||null);return '<div class="grow"><div>'+label+'<span class="sub">'+sub+'</span></div><span class="tg'+(on?' on':'')+'" data-tg="'+i+'"></span></div>'}
+  function bindTg(){main.querySelectorAll('[data-tg]').forEach(t=>{t.onclick=e=>{e.stopPropagation();const cb=tgCbs[+t.dataset.tg];if(cb)cb(t)}})}
+  function render(){tgCbs=[];
     if(cur==='wifi'){
       const nets=[['MiCasa-5G','Excellent signal'],['MiCasa','Good signal'],['Vecino_WiFi','Weak signal'],['Café Central','Good signal']];
       main.innerHTML='<h2>Wi-Fi</h2><div class="gcard">'+tgRow('Wi-Fi',wifiOn?'On':'Off',wifiOn,t=>{wifiOn=!wifiOn;t.classList.toggle('on',wifiOn);render()})+
@@ -1174,6 +1249,62 @@ function openSettings(page){
       main.innerHTML='<h2>Power</h2><div class="gcard"><div class="grow"><div>🔋 Battery<span class="sub">100% · Charging</span></div></div>'+
         '<div class="grow"><div>🌙 Turn off display<span class="sub">After 5 minutes of inactivity</span></div></div>'+
         '<div class="grow"><div>⚡ Power mode<span class="sub">Balanced</span></div></div></div>';}
+    if(cur==='network'){
+      main.innerHTML='<h2>Network</h2><div class="gcard">'+tgRow('Wired','Connected · 1000 Mb/s',netWired,t=>{netWired=!netWired;t.classList.toggle('on',netWired)})+'</div>'+
+      '<div class="gcard"><div class="grow"><div>🔐 VPN<span class="sub">Not set up</span></div><span class="val">＋</span></div></div>'+
+      '<div class="gcard"><div class="grow"><div>🌍 Network proxy</div><select><option>Off</option><option>Manual</option><option>Automatic</option></select></div></div>';
+      bindTg();}
+    if(cur==='notif'){
+      const apps=[['Discord',true],['Telegram',true],['KuruBeats',false],['Software',true],['Steam',true]];
+      main.innerHTML='<h2>Notifications</h2><div class="gcard">'+tgRow('Do Not Disturb','Silence all notifications',DND,t=>{DND=!DND;t.classList.toggle('on',DND)})+'</div>'+
+      '<div class="gcard">'+apps.map(a=>tgRow(a[0],'Show notifications',a[1],t=>t.classList.toggle('on'))).join('')+'</div>';
+      bindTg();}
+    if(cur==='display'){
+      main.innerHTML='<h2>Displays</h2><div class="gcard"><div class="grow"><div>☀ Brightness</div><input type="range" min="20" max="100" value="'+BRIGHT+'" id="gsBright"></div>'+
+      tgRow('🌙 Night Light','Warm the display at night',NIGHT,t=>{NIGHT=!NIGHT;t.classList.toggle('on',NIGHT);applyNight()})+'</div>'+
+      '<div class="gcard"><div class="grow"><div>🖥 Resolution<span class="sub">Built-in display</span></div><select><option>1920 × 1080</option><option>1366 × 768</option><option>2560 × 1440</option></select></div>'+
+      '<div class="grow"><div>🔄 Refresh rate</div><select><option>60 Hz</option><option>120 Hz</option><option>144 Hz</option></select></div></div>';
+      bindTg();main.querySelector('#gsBright').oninput=e=>{BRIGHT=+e.target.value;applyBright();};}
+    if(cur==='mouse'){
+      main.innerHTML='<h2>Mouse & Touchpad</h2><div class="gcard"><div class="grow"><div>Pointer speed</div><input type="range" min="0" max="100" value="55"></div>'+
+      tgRow('Natural scroll','Content follows finger direction',natScroll,t=>{natScroll=!natScroll;t.classList.toggle('on',natScroll)})+
+      tgRow('Tap to click','Tap the touchpad to click',tapClick,t=>{tapClick=!tapClick;t.classList.toggle('on',tapClick)})+'</div>';
+      bindTg();}
+    if(cur==='kbd'){
+      const sc=[['Open terminal','Ctrl + Alt + T'],['Activities overview','Super'],['Lock screen','Super + L'],['Screenshot','PrtSc'],['Close window','Alt + F4'],['Switch applications','Alt + Tab'],['Show desktop','Super + D']];
+      main.innerHTML='<h2>Keyboard</h2><div class="gcard">'+sc.map(s=>'<div class="grow"><div>'+s[0]+'</div><span class="val">'+s[1]+'</span></div>').join('')+'</div>'+
+      '<div class="gcard"><div class="grow"><div>⌨ Input source<span class="sub">English (US)</span></div><span class="val">＋</span></div></div>';}
+    if(cur==='privacy'){
+      main.innerHTML='<h2>Privacy</h2><div class="gcard">'+
+      tgRow('📍 Location services','Let apps know your location',privLoc,t=>{privLoc=!privLoc;t.classList.toggle('on',privLoc)})+
+      tgRow('📷 Camera','Let apps use the camera',privCam,t=>{privCam=!privCam;t.classList.toggle('on',privCam)})+
+      tgRow('🎙 Microphone','Let apps use the microphone',privMic,t=>{privMic=!privMic;t.classList.toggle('on',privMic)})+'</div>'+
+      '<div class="gcard">'+tgRow('🔒 Screen lock','Lock when the display turns off',scrLock,t=>{scrLock=!scrLock;t.classList.toggle('on',scrLock)})+
+      '<div class="grow"><div>🗑 File history<span class="sub">Remember recently opened files</span></div><span class="val">30 days</span></div></div>';
+      bindTg();}
+    if(cur==='users'){
+      main.innerHTML='<h2>Users</h2><div class="gcard"><div class="grow"><div>👤 oqded<span class="sub">Administrator · this is you</span></div><span class="val">✓</span></div>'+
+      '<div class="grow"><div>👥 Guest<span class="sub">Standard · login disabled</span></div></div></div>'+
+      '<div class="gcard"><div class="grow"><div>➕ Add user<span class="sub">Create a new local account</span></div></div></div>';}
+    if(cur==='datetime'){
+      main.innerHTML='<h2>Date & Time</h2><div class="gcard">'+
+      tgRow('🕐 24-hour clock',H24?'Now showing 13:45 style':'Now showing 1:45 PM style',H24,t=>{H24=!H24;t.classList.toggle('on',H24);tickClock();render()})+
+      tgRow('🌍 Automatic timezone','Set from your location',AUTOTZ,t=>{AUTOTZ=!AUTOTZ;t.classList.toggle('on',AUTOTZ)})+'</div>'+
+      '<div class="gcard"><div class="grow"><div>📅 Today<span class="sub">'+new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'</span></div></div></div>';
+      bindTg();}
+    if(cur==='defaultapps'){
+      const mk=(l,opts)=>'<div class="grow"><div>'+l+'</div><select>'+opts.map(o=>'<option>'+o+'</option>').join('')+'</select></div>';
+      main.innerHTML='<h2>Default Apps</h2><div class="gcard">'+
+      mk('🌐 Web',['Chrome','Firefox','Edge'])+mk('📧 Mail',['Thunderbird','Geary'])+
+      mk('🎵 Music',['KuruBeats','Radio'])+mk('🎬 Video',['Videos','VLC'])+mk('🖼 Photos',['Image Viewer','Shotwell'])+mk('📝 Text',['Text Editor','Notes'])+'</div>';}
+    if(cur==='a11y'){
+      main.innerHTML='<h2>Accessibility</h2><div class="gcard">'+
+      tgRow('🔍 Large text','Scale up interface text',BIGTEXT,t=>{BIGTEXT=!BIGTEXT;t.classList.toggle('on',BIGTEXT);applyBigText()})+
+      tgRow('🎞 Reduce animation','Minimize motion effects',REDANIM,t=>{REDANIM=!REDANIM;t.classList.toggle('on',REDANIM)})+'</div>'+
+      '<div class="gcard"><div class="grow"><div>🔈 Screen reader<span class="sub">Spoken feedback (Orca)</span></div><span class="val">Off</span></div>'+
+      '<div class="grow"><div>⌨ Sticky keys<span class="sub">Press modifier keys one at a time</span></div><span class="val">Off</span></div>'+
+      '<div class="grow"><div>🖱 Large cursor<span class="sub">Easier to see pointer</span></div><span class="val">Off</span></div></div>';
+      bindTg();}
     if(cur==='about'){
       main.innerHTML='<h2>About</h2><div class="gcard"><div class="grow"><div>🖥 Device name<span class="sub">ugs</span></div></div>'+
         '<div class="grow"><div>💿 Sistema<span class="sub">Unlimited Gunah Simulator 1.0</span></div></div>'+
@@ -1182,6 +1313,121 @@ function openSettings(page){
         '<div class="grow"><div>🎨 Graphics<span class="sub">Intel Iris Xe</span></div></div></div>';}
   }
   nav();render();
+}
+/* ============ SYSTEM MONITOR ============ */
+function openSysMon(){
+  const W=openWin('sysmon','System Monitor','<div class="sm-tabs" id="smTabs"><button class="on" data-t="res">Resources</button><button data-t="proc">Processes</button></div><div id="smBody"></div>',580,500);
+  const body=W.el.querySelector('#smBody');
+  let tab='res',timer=null;
+  const H={cpu:[],mem:[],net:[]};
+  for(let i=0;i<50;i++){H.cpu.push(25+Math.random()*20);H.mem.push(58+Math.random()*6);H.net.push(10+Math.random()*40);}
+  const procs=[['ugs-shell','oqded',1.1],['firefox','oqded',4.2],['kurubeats','oqded',2.3],['gnome-terminal','oqded',0.6],['nautilus','oqded',1.4],['gsd-media-keys','oqded',0.2],['pulseaudio','oqded',0.4],['Xwayland','oqded',2.8],['discord','oqded',3.1],['steam','oqded',6.4],['snapd','root',0.1],['NetworkManager','root',0.3]];
+  W.el.querySelectorAll('#smTabs button').forEach(b=>b.onclick=()=>{W.el.querySelectorAll('#smTabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;render();});
+  function graph(id,label){
+    return '<div class="sm-graph"><div class="lbl"><span>'+label+'</span><b id="'+id+'V"></b></div><canvas id="'+id+'"></canvas></div>';}
+  function draw(){
+    const last=k=>H[k][H[k].length-1];
+    const set=(id,v)=>{const e=body.querySelector('#'+id+'V');if(e)e.textContent=v;};
+    set('gCpu',last('cpu').toFixed(0)+'%');set('gMem',last('mem').toFixed(0)+'%');set('gNet',last('net').toFixed(0)+' KB/s');
+    const pc=(id,data,color)=>{const cv=body.querySelector('#'+id);if(!cv)return;
+      const c=cv.getContext('2d'),w=cv.width=Math.max(50,cv.offsetWidth*2),h=cv.height=220;
+      c.clearRect(0,0,w,h);c.beginPath();
+      data.forEach((v,i)=>{const x=i/(data.length-1)*w,y=h-Math.min(1,v/100)*h;i?c.lineTo(x,y):c.moveTo(x,y)});
+      c.strokeStyle=color;c.lineWidth=3;c.lineJoin='round';c.stroke();
+      c.lineTo(w,h);c.lineTo(0,h);c.closePath();c.fillStyle=color+'33';c.fill();};
+    pc('gCpu',H.cpu,'#e05a4f');pc('gMem',H.mem,'#4a86ff');pc('gNet',H.net,'#7dd87d');}
+  function render(){
+    clearInterval(timer);timer=null;
+    if(tab==='res'){
+      body.innerHTML=graph('gCpu','💻 CPU')+graph('gMem','🧠 Memory')+graph('gNet','🌐 Network');
+      const tick=()=>{const j=(a,lo,hi,sp)=>Math.max(lo,Math.min(hi,a[a.length-1]+(Math.random()-0.5)*sp));
+        H.cpu.push(j(H.cpu,4,96,22));H.cpu.shift();H.mem.push(j(H.mem,40,92,4));H.mem.shift();H.net.push(j(H.net,2,98,30));H.net.shift();draw();};
+      tick();timer=setInterval(()=>{if(!document.body.contains(body))return clearInterval(timer);tick();},1000);}
+    else{
+      const rows=procs.map(p=>{const c=Math.max(0,(p[2]+(Math.random()-0.5)*1.5)).toFixed(1);
+        return '<div class="sm-prow"><span>'+p[0]+'</span><span>'+p[1]+'</span><span>'+c+'%</span></div>'}).join('');
+      body.innerHTML='<div class="sm-proc"><div class="sm-prow hd"><span>Process</span><span>User</span><span>CPU %</span></div>'+rows+'</div>';
+      timer=setInterval(()=>{if(!document.body.contains(body))return clearInterval(timer);render();},2500);}
+  }
+  W.el.querySelector('[data-a=close]').addEventListener('click',()=>clearInterval(timer));
+  render();
+}
+/* ============ CALENDAR ============ */
+function openCalendarApp(){
+  const W=openWin('calendar','Calendar','<div class="cal-head"><button id="cPrev">‹</button><b id="cTitle"></b><button id="cNext">›</button></div><div class="cal-grid" id="cGrid"></div>',380,400);
+  let d=new Date();d.setDate(1);
+  const grid=W.el.querySelector('#cGrid'),title=W.el.querySelector('#cTitle');
+  function render(){
+    const y=d.getFullYear(),m=d.getMonth(),today=new Date();
+    title.textContent=d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
+    let h=['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>'<div class="cal-dow">'+x+'</div>').join('');
+    for(let i=first-1;i>=0;i--)h+='<div class="cal-day dim">'+(prevDays-i)+'</div>';
+    for(let i=1;i<=days;i++){const isT=i===today.getDate()&&m===today.getMonth()&&y===today.getFullYear();
+      h+='<div class="cal-day'+(isT?' today':'')+'">'+i+'</div>';}
+    const tail=(7-(first+days)%7)%7;
+    for(let i=1;i<=tail;i++)h+='<div class="cal-day dim">'+i+'</div>';
+    grid.innerHTML=h;}
+  W.el.querySelector('#cPrev').onclick=()=>{d.setMonth(d.getMonth()-1);render();};
+  W.el.querySelector('#cNext').onclick=()=>{d.setMonth(d.getMonth()+1);render();};
+  render();
+}
+/* ============ SOFTWARE CENTER ============ */
+const SW_APPS=[
+ ['firefox','Firefox','Fast, private web browser','Internet'],
+ ['chrome','Chrome','Google web browser','Internet'],
+ ['vlc','VLC','Plays every video format','Multimedia'],
+ ['kurubeats','KuruBeats','Your music player','Multimedia'],
+ ['steam','Steam','PC gaming platform','Games'],
+ ['discord','Discord','Chat for communities','Internet'],
+ ['gimp','GIMP','Pro image editor','Graphics'],
+ ['paint','Paint','Simple drawing fun','Graphics'],
+ ['calc','Calculator','Do the math','Accessories'],
+ ['editor','Text Editor','Notes & code','Office'],
+ ['terminal','Terminal','Command line','System'],
+ ['sysmon','System Monitor','Watch resources','System']];
+let swInstalled={firefox:1,chrome:1,terminal:1,calc:1,editor:1,kurubeats:1,steam:1,discord:1};
+function openSoftware(){
+  const W=openWin('software','Software','<div class="sw-cats" id="swCats"></div><div class="sw-grid" id="swGrid"></div>',640,480);
+  const cats=['All','Internet','Multimedia','Games','Graphics','Office','Accessories','System'];
+  let cat='All';
+  const grid=W.el.querySelector('#swGrid'),cc=W.el.querySelector('#swCats');
+  function render(){
+    cc.innerHTML=cats.map(c=>'<button class="'+(c===cat?'on':'')+'" data-c="'+c+'">'+c+'</button>').join('');
+    cc.querySelectorAll('button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;render();});
+    grid.innerHTML=SW_APPS.filter(a=>cat==='All'||a[3]===cat).map(a=>
+      '<div class="sw-card"><span class="ic">'+iconHTML(a[0])+'</span><b>'+a[1]+'</b><span>'+a[2]+'</span><button data-s="'+a[0]+'" class="'+(swInstalled[a[0]]?'inst':'')+'">'+(swInstalled[a[0]]?'Installed':'Install')+'</button></div>').join('');
+    grid.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const id=b.dataset.s;swInstalled[id]=!swInstalled[id];
+      b.textContent=swInstalled[id]?'Installed':'Install';b.classList.toggle('inst',!!swInstalled[id]);});}
+  render();
+}
+/* ============ CLOCKS ============ */
+function openClocks(){
+  const W=openWin('clocks','Clocks','<div id="wcList"></div>',380,430);
+  const cities=[['🇮🇳','Indore','Asia/Kolkata'],['🇺🇸','Los Angeles','America/Los_Angeles'],['🇬🇧','London','Europe/London'],['🇯🇵','Tokyo','Asia/Tokyo'],['🇦🇪','Dubai','Asia/Dubai']];
+  const list=W.el.querySelector('#wcList');
+  function render(){
+    const now=new Date();
+    list.innerHTML=cities.map(c=>{let t='--:--';
+      try{t=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',timeZone:c[2],hour12:!H24});}catch(e){}
+      return '<div class="wc-row"><span style="font-size:26px">'+c[0]+'</span><div><b>'+c[1]+'</b></div><div class="t"><b>'+t+'</b></div></div>'}).join('');}
+  render();const timer=setInterval(()=>{if(!document.body.contains(list))return clearInterval(timer);render();},15000);
+  W.el.querySelector('[data-a=close]').addEventListener('click',()=>clearInterval(timer));
+}
+/* ============ CHARACTERS ============ */
+function openChars(){
+  const chars=[...'😀😁😂🤣😊😍😎🤔😴😭😡👍👎👏🙏💪🔥✨🎉❤️💯🌟⚡🎵🎮📱💻🚀🌙☀️🌈🍕⚽🎯💡📌📎✂️🔒🔑❌✅❓❗➡️⬆️⬇️⬅️Ω★☺♥♦♣♠♪'];
+  const W=openWin('chars','Characters','<div class="char-grid" id="chGrid"></div><div style="padding:0 16px 14px;color:#999;font-size:12px" id="chMsg">Click a character to copy it</div>',470,440);
+  const g=W.el.querySelector('#chGrid'),msg=W.el.querySelector('#chMsg');
+  chars.forEach(c=>{const b=document.createElement('button');b.textContent=c;
+    b.onclick=()=>{try{if(navigator.clipboard)navigator.clipboard.writeText(c);msg.textContent='Copied '+c+' ✓';}catch(e){msg.textContent=c;}};g.appendChild(b);});
+}
+/* ============ DISKS ============ */
+function openDisks(){
+  const disks=[['💽','ugs-disk · 512 GB SSD','68%',68,'#4a86ff'],['📀','Data · 1 TB HDD','23%',23,'#7dd87d'],['💾','Boot · EFI partition','12%',12,'#ffcf5c']];
+  const W=openWin('disks','Disks','<div id="dkList"></div>',440,380);
+  W.el.querySelector('#dkList').innerHTML=disks.map(d=>'<div class="disk-card"><div style="display:flex;justify-content:space-between"><b>'+d[0]+' '+d[1]+'</b><span style="color:#999">'+d[2]+' used</span></div><div class="bar"><i style="width:'+d[3]+'%;background:'+d[4]+'"></i></div><div style="color:#999;font-size:12px">Healthy · checked today</div></div>').join('');
 }
 /* ============ icons for taskbar + titlebars ============ */
 const _openWin=openWin;
